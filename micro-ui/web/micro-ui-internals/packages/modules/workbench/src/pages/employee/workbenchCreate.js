@@ -1,4 +1,3 @@
-import { Loader, FormComposer } from "@egovernments/digit-ui-react-components";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -55,12 +54,24 @@ export const newConfig = [
         },
       },
 
-      {
+      
+
+       {
+         label: "Photograph",
+         isMandatory: true,
+         key: "BrSelectFather",
+         type: "number",
+         disable: false,
+         populators: { name: "samplenum1", error: "sample error message", validation: { min: 5999999999, max: 9999999999 } },
+       },
+       {
+
         label: "Phone number",
         isMandatory: true,
         key: "BrSelectFather",
         type: "number",
         disable: false,
+
         populators: { name: "phno", error: "sample error message", validation: { min: 0, max: 9999999999 } },
       },
     ],
@@ -80,12 +91,15 @@ export const newConfig = [
       },
       {
         inline: true,
+
+
         label: "City",
         isMandatory: true,
         //description: "Field supporting description",
         key: "BrSelectFather",
         type: "text",
         disable: false,
+
         populators: { name: "city", error: "sample error message", validation: { pattern: /^[A-Za-z]+$/i } },
       },
       {
@@ -274,18 +288,24 @@ export const newConfig = [
         inline: true,
         label: "Street",
         isMandatory: false,
+
+
         //description: "Field supporting description",
         key: "BrSelectFather",
         type: "text",
         disable: false,
+
         populators: { name: "street", error: "sample error message", validation: { pattern: /^[A-Za-z]+$/i } },
       },
       {
         inline: true,
+
+
         label: "Door Number",
         isMandatory: true,
         //description: "Field supporting description",
         key: "BrSelectFather",
+
         type: "number",
         disable: false,
         populators: { name: "doorno", error: " error ", validation: { min: 0, max: 9999999999 } },
@@ -294,6 +314,8 @@ export const newConfig = [
         inline: true,
         label: "Landmark",
         isMandatory: false,
+
+
         //description: "Field supporting description",
         key: "BrSelectFather",
         type: "text",
@@ -332,6 +354,7 @@ const Create = () => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   const history = useHistory();
+
   const [gender, setGender] = useState("");
   const reqCreate = {
     url: `/individual/v1/_create`,

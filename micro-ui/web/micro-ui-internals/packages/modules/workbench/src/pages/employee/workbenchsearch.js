@@ -1,189 +1,155 @@
-import {
-  Header,
-  InboxSearchComposer
-} from "@egovernments/digit-ui-react-components";
-import React from "react";
+import { AddFilled, Button, Header, InboxSearchComposer, Loader, Dropdown,Toast,WorkflowModal,ActionBar,SubmitBar } from "@egovernments/digit-ui-react-components";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-//import searchConfigMUKTA from "../../configs/ExampleConfig";
+import { useHistory, useParams } from "react-router-dom";
+import _, { drop } from "lodash";
+import { Config } from "../../configs/LocalisationSearchConfig";
+import getEditModalConfig from "../../configs/EditModalConfig";
+import { useQueryClient } from "react-query";
 
-export const searchconfig = () => 
-{
-  return {
-    label: "Individual Search",
-    type: "search",
-    apiDetails: {
-      serviceName: "/individual/v1/_search",
-      requestParam: {},
-      requestBody: {
-        apiOperation: "SEARCH",
-        Individual: {},
-      },
-      masterName: "commonUiConfig",
-      moduleName: "SearchIndividualConfig",
-      minParametersForSearchForm: 1,
-      tableFormJsonPath: "requestParam",
-      filterFormJsonPath: "requestBody.Individual",
-      searchFormJsonPath: "requestBody.Individual",
+const WorkbenchSearch = () => {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient()
+  const history = useHistory();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
+  const [showToast, setShowToast] = useState(false);
+  const [modalConfig, setModalConfig] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [editRow,setEditRow] = useState(null)
+  const [formData,setFormData] = useState(null)
+  const [callRefetch,setCallRefetch] = useState(false)
+  const reqCriteriaAdd = {
+    url: `/localization/messages/v1/_upsert`,
+    params: {},
+    body: {
+      tenantId,
     },
-    sections: {
-      search: {
-        uiConfig: {
-          headerStyle: null,
-          formClassName: "custom-both-clear-search",
-          primaryLabel: "ES_COMMON_SEARCH",
-          secondaryLabel: "ES_COMMON_CLEAR_SEARCH",
-          minReqFields: 1,
-          defaultValues :{
-            individualName : "",
-            mobileNumber :"",
-            individualId :"",
-
-          },
-          fields: [
-            {
-              // inline: true,
-              label: "Applicant name ",
-              isMandatory: false,
-              key: "BrSelectFather",
-              type: "text",
-              disable: false,
-              populators: { 
-                name: "individualName", 
-                error: "Required", 
-                validation: { pattern: /^[A-Za-z]+$/i } 
-              },
-            },
-            {
-              // inline: true,
-              label: "Mobile Number",
-              isMandatory: false,
-              key: "BrSelectFather",
-              type: "number",
-              disable: false,
-              populators: { 
-                name: "mobileNumber", 
-                
-              },
-            },
-            {
-              // inline: true,
-              label: "Individual Id ",
-              isMandatory: false,
-              key: "BrSelectFather",
-              type: "text",
-              disable: false,
-              populators: { 
-                name: "individualId",
-              },
-            }
-          ],
-        },
-        label: "",
-        children: {},
-        show: true
-      },
-      // searchResult: {
-      //   tenantId: "pg.citya",
-      //   label: "",
-      //   uiConfig: {
-      //     columns: [
-      //       {
-      //         label :"Applicant Adress",
-      //         jsonPath :"Individual.address.id",
-      //         "additionalCustomization": true
-      //       },
-      //       {
-      //         label: "Applicant Id",
-      //         jsonPath: "Individual.id",
-      //       },
-      //       {
-      //         label: "Applicant Name",
-      //         jsonPath: "Individual.name.givenName",
-      //       }
-
-      //     ],
-      //     // enableGlobalSearch: false,
-      //     // enableColumnSort: true,
-      //     resultsJsonPath: "Individual",
-      //   },
-      //   children: {},
-      //   show: true,
-      // },
-      searchResult: {
-        tenantId: "pg.citya",
-        label: "",
-        uiConfig: {
-          columns: [
-            {
-              label: "Individual ID",
-              jsonPath: "individualId"
-            },
-            {
-              label: "Name",
-              jsonPath: "name.givenName"
-            },
-            // {
-            //   label: "Door No",
-            //   jsonPath: "address[0].doorNo"
-            // },
-            // {
-            //   label: "Landmark",
-            //   jsonPath: "address[0].landmark"
-            // },
-            // {
-            //   label: "City",
-            //   jsonPath: "address[0].city"
-            // },
-            // {
-            //   label: "Pincode",
-            //   jsonPath: "address[0].pincode"
-            // },
-            {
-              label: "Address",
-              jsonPath: "address", // Assuming you want the first address
-              // additionalCustomization: (data) => {
-              //   // Customize the address format here
-              //   const addressData = data && data.address && data.address[0];
-              //   if (addressData) {
-              //     const { doorNo, street, locality, city, pincode } = addressData;
-              //     return `${doorNo}, ${street}, ${locality}, ${city}, ${pincode}`;
-              //   }
-              //  // return "NA";
-              // }
-              "additionalCustomization": true
-            },
-            // Add more columns as needed
-          ],
-          enableGlobalSearch: false,
-          enableColumnSort: true,
-          resultsJsonPath: "Individual" // This is the key where the array of individual data is located
-        },
-        children: {},
-        show: true,
-      },
-      
-      additionalSections: {},
+    config: {
+      enabled: true,
     },
   };
-};
 
-const SearchIndividual = () => {
-  const { t } = useTranslation();
-  const tenant = Digit.ULBService.getStateId();
-  const indConfigs = searchconfig();
+  const mutation = Digit.Hooks.useCustomAPIMutationHook(reqCriteriaAdd);
 
-  // let configs = useMemo(
-  //   () => Digit.Utils.preProcessMDMSConfigInboxSearch(t, indConfigs, "sections.search.uiConfig.fields",{
-  //   }
-  //   ),[indConfigs]);
+  const closeToast = () => {
+    setTimeout(() => {
+      setShowToast(null);
+    }, 5000);
+  };
+
+  const formUpdate = (form) => {
+    setFormData(form)
+  }
+
+  const onModalSubmit = async (payload) => {
+    if(!payload?.message){
+      setShowToast({ label: `${t("WBH_LOC_ENTER_VALID_MESSAGE")}`,isError: true,style:{
+        zIndex:"10000"
+      } });
+      closeToast()
+      return
+    }
+    const onSuccess = (resp) => {
+      setShowToast({ label: `${t("WBH_LOC_UPDATE_SUCCESS")}` });
+      setShowModal(null)
+      setEditRow(null)
+      setModalConfig(null)
+      // const queryCache = queryClient.getQueryCache()
+      // const queryKeys = queryCache.getAll().map(cache => cache.queryKey) // QueryKey[]
+      // queryClient.invalidateQueries([`/localization/messages/v1/_upsert`,`Random`])
+      // queryClient.invalidateQueries([`/localization/messages/v1/_upsert`,`Random`,`defaultLocale`])
+      closeToast();
+      setCallRefetch(true)
+    };
+    const onError = (resp) => {
+      let label = `${t("WBH_LOC_UPDATE_FAIL")}: `
+      resp?.response?.data?.Errors?.map((err,idx) => {
+        if(idx===resp?.response?.data?.Errors?.length-1){
+          label = label + t(Digit.Utils.locale.getTransformedLocale(err?.code)) + '.'
+        }else{
+        label = label + t(Digit.Utils.locale.getTransformedLocale(err?.code)) + ', '
+        }
+      })
+      setShowToast({ label, isError: true });
+      setShowModal(null)
+      setEditRow(null)
+      closeToast();
+    };
+
+
+    mutation.mutate(
+      {
+        params: {},
+        body: {
+          tenantId,
+          messages: [payload],
+        },
+      },
+      {
+        onError,
+        onSuccess,
+      }
+    );
+
+  }
+
+  const onClickSvg = (row) => {
+    setEditRow(row.original)
+    setShowModal(true)
+  }
   
+  useEffect(() => {
+    if(editRow) {
+      setModalConfig(
+        getEditModalConfig({
+          t,
+          editRow,
+          formData
+        })
+      );
+    }
+  }, [editRow]);
+
   return (
     <React.Fragment>
-      <Header styles={{ fontSize: "32px" }}>{t(indConfigs?.label)}</Header> 
-      <div className="inbox-search-wrapper">
-        <InboxSearchComposer configs={indConfigs}></InboxSearchComposer>
+      <div className="jk-header-btn-wrapper">
+      <Header className="works-header-search">{t(Config?.label)}</Header>
+      {/* {Config && Digit.Utils.didEmployeeHasRole(Config?.actionRole) && (
+          <Button
+            label={t(Config?.actionLabel)}
+            variation="secondary"
+            icon={<AddFilled style={{ height: "20px", width: "20px" }} />}
+            onButtonClick={() => {
+              history.push(`/${window?.contextPath}/employee/${Config?.actionLink}`);
+            }}
+            type="button"
+            className={'header-btn'}
+          />
+        )} */}
+      {
+        Config && Digit.Utils.didEmployeeHasRole(Config?.actionRole) &&
+        <ActionBar >
+          <SubmitBar disabled={false} className="mdms-add-btn"  onSubmit={() => {
+              history.push(`/${window?.contextPath}/employee/${Config?.actionLink}`);
+            }} label={t("WBH_ADD_LOCALISATION")} />
+        </ActionBar>
+      }
       </div>
+      {Config && <div className="inbox-search-wrapper">
+        <InboxSearchComposer onFormValueChange={formUpdate} configs={Config} additionalConfig = {{
+          resultsTable:{
+            onClickSvg
+          },
+          search:{
+            callRefetch,
+            setCallRefetch
+          }
+        }}></InboxSearchComposer>
+      </div>}
+      {showModal && modalConfig && <WorkflowModal closeModal={() => setShowModal(false)} onSubmit={onModalSubmit} config={modalConfig} popupModuleActionBarStyles={{marginTop:"-1rem"}} popupModuleMianStyles={{marginTop:"-2rem"}} />}
+      {showToast && <Toast label={showToast.label} error={showToast?.isError} isDleteBtn={true} onClose={()=>setShowToast(null)} style={showToast?.style}></Toast>}
     </React.Fragment>
   );
 };
-export default SearchIndividual;
+
+export default WorkbenchSearch ;
