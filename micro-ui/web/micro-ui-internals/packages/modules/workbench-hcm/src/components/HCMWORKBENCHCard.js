@@ -39,7 +39,7 @@ const HCMWORKBENCHCard = () => {
       link: `/${window?.contextPath}/employee/hcmworkbench/ou`,
       roles: ROLES.MDMS,
     },
-  
+
     {
       label: t("WORKBENCH_BOUNDARY"),
       link: `/${window?.contextPath}/employee/hcmworkbench/boundary`,
@@ -56,7 +56,6 @@ const HCMWORKBENCHCard = () => {
     //   roles: ROLES.MDMS,
     // },
   ];
-
 
   links = links.filter((link) => (link?.roles && link?.roles?.length > 0 ? Digit.Utils.didEmployeeHasAtleastOneRole(link?.roles) : true));
 
