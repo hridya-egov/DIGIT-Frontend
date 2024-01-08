@@ -7,7 +7,7 @@ import { Config } from "../../configs/LocalisationSearchConfig";
 import getEditModalConfig from "../../configs/EditModalConfig";
 import { useQueryClient } from "react-query";
 
-const WorkbenchSearch = () => {
+const searchcard = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient()
   const history = useHistory();
@@ -152,4 +152,4 @@ const WorkbenchSearch = () => {
   );
 };
 
-export default WorkbenchSearch ;
+export default searchcard ;

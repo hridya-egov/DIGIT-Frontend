@@ -58,11 +58,11 @@ export const newConfig = [
 
        {
          label: "Photograph",
-         isMandatory: true,
+         isMandatory: false,
          key: "BrSelectFather",
-         type: "number",
+         type: "file",
          disable: false,
-         populators: { name: "samplenum1", error: "sample error message", validation: { min: 5999999999, max: 9999999999 } },
+         //populators: { name: "samplenum1", error: "sample error message", validation: { min: 5999999999, max: 9999999999 } },
        },
        {
 
@@ -305,6 +305,7 @@ export const newConfig = [
         isMandatory: true,
         //description: "Field supporting description",
         key: "BrSelectFather",
+        type: "number",
 
         type: "number",
         disable: false,
