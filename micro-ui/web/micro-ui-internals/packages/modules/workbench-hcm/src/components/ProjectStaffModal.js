@@ -30,7 +30,7 @@ const ProjectStaffModal = ({ t, onClose, heading, onCancel, onSubmit, userName, 
       isDisabled={isDisabled}
     >
       <Card style={{ boxShadow: "none" }}>
-        <TextInput name={"name"} placeholder={"Search by name"} value={userName} onChange={onChange} />
+        <TextInput name={"name"} placeholder={`${t("WBH_SEARCH_BY_NAME")}`} value={userName} onChange={onChange} />
         <Button label={`${t("WBH_ACTION_SEARCH")}`} type="button" variation="primary" onButtonClick={onSearch} />
         <BreakLine />
         <TextInput name={"name"} value={searchResult} />

@@ -23,7 +23,7 @@ const ProjectStaffComponent = (props) => {
 
   const [showPopup, setShowPopup] = useState(false);
 
-  const { tenantId, projectId } = Digit.Hooks.useQueryParams();
+  const { tenantId } = Digit.Hooks.useQueryParams();
 
   const requestCriteria = {
     url: "/project/staff/v1/_search",
@@ -112,7 +112,6 @@ const ProjectStaffComponent = (props) => {
 
   const searchCriteria = {
     url: "/egov-hrms/employees/_search",
-
     config: {
       enable: true,
     },
@@ -152,13 +151,11 @@ const ProjectStaffComponent = (props) => {
 
   const reqCriteria = {
     url: "/project/staff/v1/_create",
-
     config: false,
   };
 
   const reqDeleteCriteria = {
     url: "/project/staff/v1/_delete",
-
     config: false,
   };
 
@@ -196,7 +193,7 @@ const ProjectStaffComponent = (props) => {
               ProjectStaff: {
                 tenantId,
                 userId: userId,
-                projectId: projectId,
+                projectId: props?.projectId,
                 startDate: props?.Project[0]?.startDate,
                 endDate: props?.Project[0]?.endDate,
               },
