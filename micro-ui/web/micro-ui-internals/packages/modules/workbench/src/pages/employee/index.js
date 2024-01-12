@@ -144,7 +144,7 @@ const App = ({ path }) => {
           <PrivateRoute path={`${path}/workbench-search`} component={() => <SearchIndividual parentRoute={path} />} />
 
         </AppContainer>
-      </Switch>MyForm
+      </Switch>
     </React.Fragment>
   );
 };
