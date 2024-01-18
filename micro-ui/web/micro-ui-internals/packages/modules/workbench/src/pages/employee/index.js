@@ -13,9 +13,6 @@ import MDMSSearchv2 from "./MDMSSearchv2";
 import MDMSManageMaster from "./MDMSManageMaster";
 import LocalisationAdd from "./LocalisationAdd";
 import WorkbenchHeader from "../../components/WorkbenchHeader";
-import CreateConfig from "./workbenchCreate";
-import Create from "./workbenchCreate";
-import SearchIndividual from"./workbenchsearch";
 
 const WorkbenchBreadCrumb = ({ location, defaultPath }) => {
   const { t } = useTranslation();
@@ -43,13 +40,6 @@ const WorkbenchBreadCrumb = ({ location, defaultPath }) => {
       isBack: pathVar.includes("localisation-search") ? true : false
       // query:`moduleName=${moduleName}&masterName=${masterName}`
     },
-    {
-      path: `/${window.contextPath}/employee/workbench/localisation-search`,
-      content: t(`LOCALISATION_SEARCH`),
-      show: pathVar.includes("localisation-") ? true : false,
-      isBack: pathVar.includes("workbenchsearch.js") ? true : false
-      // query:`moduleName=${moduleName}&masterName=${masterName}`
-    },
 
     {
       path: `/${window.contextPath}/employee/workbench/mdms-search-v2`,
@@ -63,20 +53,6 @@ const WorkbenchBreadCrumb = ({ location, defaultPath }) => {
       content: t(`MDMS_VIEW`),
       show: pathVar.includes("mdms-edit") ? true : false,
       query: `moduleName=${moduleName}&masterName=${masterName}&uniqueIdentifier=${uniqueIdentifier}`
-    },
-    {
-      path: `/${window.contextPath}/employee/workbench/workbench-create`,
-      content: t(`LOCALISATION_SEARCH`),
-      show: pathVar.includes("localisation-") ? true : false,
-      isBack: pathVar.includes("workbenchCreate") ? true : false
-      // query:`moduleName=${moduleName}&masterName=${masterName}`
-    },
-    {
-      path: `/${window.contextPath}/employee/workbench/workbenchsearch`,
-      content: t(`workbenchsearch`),
-      show: pathVar.includes("localisation-") ? true : false,
-      isBack: pathVar.includes("workbenchsearch") ? true : false
-      // query:`moduleName=${moduleName}&masterName=${masterName}`
     },
     {
       path: `/${window.contextPath}/employee/masters/response`,
@@ -145,8 +121,6 @@ const App = ({ path }) => {
           <PrivateRoute path={`${path}/manage-master-data`} component={() => <MDMSManageMaster parentRoute={path} />} />
           <PrivateRoute path={`${path}/mdms-search-v2`} component={() => <MDMSSearchv2 parentRoute={path} />} />
           <PrivateRoute path={`${path}/localisation-add`} component={() => <LocalisationAdd parentRoute={path} />} />
-          <PrivateRoute path={`${path}/workbench-create`} component={() => <Create parentRoute={path} />} />
-          <PrivateRoute path={`${path}/workbench-search`} component={() => <SearchIndividual parentRoute={path} />} />
 
         </AppContainer>
       </Switch>
