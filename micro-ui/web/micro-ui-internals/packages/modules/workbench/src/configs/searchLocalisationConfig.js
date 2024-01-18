@@ -2,7 +2,7 @@ export const Config = {
   label: "WBH_SEARCH_LOCALISATION",
   type: "search",
   actionLabel: "WBH_ADD_LOCALISATION",
-  actionRoles: ["MDMS_ADMIN","EMPLOYEE","CAMPAIGN_ADMIN","LOC_ADMIN"],
+  actionRole: "EMPLOYEE",
   actionLink: "workbench/add-localisation",
   apiDetails: {
     serviceName: "/wms/individual/_search",
