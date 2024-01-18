@@ -378,6 +378,7 @@ const getCriteriaForSelectData = (allProps) => {
     },
     changeQueryName: `data-${schemaCode}`,
   };
+  console.log(schemaCode, "schemaCode");
   if (schemaCode === "CUSTOM" && configs?.customUiConfigs?.custom?.length > 0) {
     const customConfig = configs?.customUiConfigs?.custom?.filter((data) => data?.fieldPath == fieldPath)?.[0] || {};
     reqCriteriaForData.url = customConfig?.dataSource?.API;
@@ -424,24 +425,22 @@ const getCriteriaForSelectData = (allProps) => {
         respData = customFun?.(data);
       }
       const finalJSONPath = `registry.rootSchema.properties.${Digit.Utils.workbench.getUpdatedPath(fieldPath)}.enum`;
-      /* enahanced to support both string values and object label value*/
-      const keyValuePairs=  respData?.map((item) => ({ label: item?.label|| item, value: item?.value||item }))
       if (_.has(allProps, finalJSONPath)) {
         _.set(
           allProps,
           finalJSONPath,
-          keyValuePairs
+          respData?.map((item) => ({ label: item, value: item }))
         );
         const path = `definition.properties.${Digit.Utils.workbench.getUpdatedPath(fieldPath)}.enum`;
         const newSchema = _.cloneDeep(formSchema);
         _.set(
           newSchema,
           path,
-          keyValuePairs?.map((item) => item.value)
+          respData?.map((e) => e)
         );
         updateSchema(newSchema);
       }
-      return keyValuePairs;
+      return respData?.map((item) => ({ label: item, value: item }));
     };
   }
   return reqCriteriaForData;

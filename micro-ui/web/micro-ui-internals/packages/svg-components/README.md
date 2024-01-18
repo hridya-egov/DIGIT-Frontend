@@ -73,9 +73,9 @@ const { Accessibility } = SVG;
 0.0.1 base version
 ```
 
-### Published from DIGIT Frontend 
+## Published from DIGIT Core
 
-DIGIT Frontend Repo (https://github.com/egovernments/Core-Platform/tree/digit-ui-core)
+Digit Core Repo (https://github.com/egovernments/Core-Platform/tree/digit-ui-core)
 
 # Contributors
 
