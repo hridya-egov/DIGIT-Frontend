@@ -7,7 +7,7 @@ import useCustomAPIMutationHook from "../../../../../libraries/src/hooks/useCust
 //const formDataToRequestObj = ( formData ) => {
 //console.log("inside format")
 //make a req object (refer from postman)
-//return that obj
+//return that object
 //}
 
 export const newConfig = [
