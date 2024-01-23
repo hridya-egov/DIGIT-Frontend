@@ -12,7 +12,7 @@ import useCustomAPIMutationHook from "../../../../../libraries/src/hooks/useCust
 
 export const newConfig = [
   {
-    head: "Create Sanitation Worker",
+    head: "Create Individual",
     //subHead: "Config Sub Head",
     body: [
       {
@@ -63,7 +63,6 @@ export const newConfig = [
          disable: false,
          //populators: { name: "samplenum1", error: "sample error message", validation: { min: 5999999999, max: 9999999999 } },
        },
-
       {
         label: "Phone number",
         isMandatory: true,
@@ -108,11 +107,7 @@ export const newConfig = [
           optionsKey: "name",
           error: "sample required message",
           required: true,
-          // mdmsConfig: {
-          //   masterName: "GenderType",
-          //   moduleName: "common-masters",
-          //   localePrefix: "COMMON_GENDER",
-          // },
+          
           options: [
             {
                 "code": "SUN01",
@@ -269,16 +264,6 @@ export const newConfig = [
         },
       },
 
-      //{
-      //   inline:true,
-      //   label: "Locality",
-      //   isMandatory: true,
-      //   //description: "Field supporting description",
-      //   key: "BrSelectFather",
-      //   type: "text",
-      //   disable: false,
-      //   populators: { name: "locality", error: "sample error message", validation: { pattern: /^[A-Za-z]+$/i } },
-      // },
       {
         inline: true,
         label: "Street",
@@ -471,7 +456,7 @@ console.log(dateconverted);
     <div>
       <FormComposerV2
         label={t("Submit")}
-        description={"Description"}
+       // description={"Description"}
         // text={"Sample Text if required"}
         config={newConfig.map((config) => {
           return {

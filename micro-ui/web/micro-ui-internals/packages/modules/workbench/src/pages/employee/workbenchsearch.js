@@ -41,7 +41,7 @@ export const searchconfig = () =>
           },
           fields: [
             {
-              // inline: true,
+
               label: "Applicant name ",
               isMandatory: false,
               key: "BrSelectFather",
@@ -54,19 +54,15 @@ export const searchconfig = () =>
               },
             },
             {
-              // inline: true,
-              label: "Mobile Number",
-              isMandatory: false,
+              label: "Phone number",
+              isMandatory: true,
               key: "BrSelectFather",
               type: "number",
               disable: false,
-              populators: { 
-                name: "mobileNumber", 
-                
-              },
+              populators: { name: "mobileNumber", error: "sample error message", validation: { min: 0, max: 99999} },
             },
+            
             {
-              // inline: true,
               label: "Individual Id ",
               isMandatory: false,
               key: "BrSelectFather",
@@ -75,40 +71,13 @@ export const searchconfig = () =>
               populators: { 
                 name: "individualId",
               },
-            }
+            },
           ],
         },
         label: "",
         children: {},
         show: true
       },
-      // searchResult: {
-      //   tenantId: "pg.citya",
-      //   label: "",
-      //   uiConfig: {
-      //     columns: [
-      //       {
-      //         label :"Applicant Adress",
-      //         jsonPath :"Individual.address.id",
-      //         "additionalCustomization": true
-      //       },
-      //       {
-      //         label: "Applicant Id",
-      //         jsonPath: "Individual.id",
-      //       },
-      //       {
-      //         label: "Applicant Name",
-      //         jsonPath: "Individual.name.givenName",
-      //       }
-
-      //     ],
-      //     // enableGlobalSearch: false,
-      //     // enableColumnSort: true,
-      //     resultsJsonPath: "Individual",
-      //   },
-      //   children: {},
-      //   show: true,
-      // },
       searchResult: {
         tenantId: "pg.citya",
         label: "",
@@ -122,22 +91,6 @@ export const searchconfig = () =>
               label: "Name",
               jsonPath: "name.givenName"
             },
-            // {
-            //   label: "Door No",
-            //   jsonPath: "address[0].doorNo"
-            // },
-            // {
-            //   label: "Landmark",
-            //   jsonPath: "address[0].landmark"
-            // },
-            // {
-            //   label: "City",
-            //   jsonPath: "address[0].city"
-            // },
-            // {
-            //   label: "Pincode",
-            //   jsonPath: "address[0].pincode"
-            // },
             {
               label: "Address",
               jsonPath: "address", // Assuming you want the first address
