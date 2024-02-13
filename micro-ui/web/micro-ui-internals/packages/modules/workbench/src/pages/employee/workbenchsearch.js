@@ -2,9 +2,15 @@ import {
   Header,
   InboxSearchComposer
 } from "@egovernments/digit-ui-react-components";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-//import searchConfigMUKTA from "../../configs/ExampleConfig";
+
+// Define default values for search fields
+const defaultSearchValues = {
+  individualName: "",
+  mobileNumber: "",
+  individualId: ""
+};
 
 export const searchconfig = () => 
 {
@@ -18,9 +24,9 @@ export const searchconfig = () =>
         apiOperation: "SEARCH",
         Individual: {},
       },
-      masterName: "commonUiConfig",
+     masterName: "commonUiConfig",
       moduleName: "SearchIndividualConfig",
-      minParametersForSearchForm: 1,
+      minParametersForSearchForm: 0,
       tableFormJsonPath: "requestParam",
       filterFormJsonPath: "requestBody.Individual",
       searchFormJsonPath: "requestBody.Individual",
@@ -28,25 +34,17 @@ export const searchconfig = () =>
     sections: {
       search: {
         uiConfig: {
-          headerStyle: null,
           formClassName: "custom-both-clear-search",
           primaryLabel: "ES_COMMON_SEARCH",
           secondaryLabel: "ES_COMMON_CLEAR_SEARCH",
-          minReqFields: 1,
-          defaultValues :{
-            individualName : "",
-            mobileNumber :"",
-            individualId :"",
-
-          },
+          minReqFields: 0,
+          defaultValues: defaultSearchValues, // Set default values for search fields
           fields: [
             {
-
               label: "Applicant name ",
               isMandatory: false,
-              key: "BrSelectFather",
+              key: "individualName",
               type: "text",
-              disable: false,
               populators: { 
                 name: "individualName", 
                 error: "Required", 
@@ -55,17 +53,15 @@ export const searchconfig = () =>
             },
             {
               label: "Phone number",
-              isMandatory: true,
-              key: "BrSelectFather",
+              isMandatory: false,
+              key: "Phone number",
               type: "number",
               disable: false,
-              populators: { name: "mobileNumber", error: "sample error message", validation: { min: 0, max: 99999} },
+              populators: { name: "mobileNumber", error: "sample error message", validation: { min: 0, max: 999999999} },
             },
-            
             {
               label: "Individual Id ",
               isMandatory: false,
-              key: "BrSelectFather",
               type: "text",
               disable: false,
               populators: { 
@@ -74,13 +70,11 @@ export const searchconfig = () =>
             },
           ],
         },
-        label: "",
-        children: {},
+
         show: true
       },
       searchResult: {
         tenantId: "pg.citya",
-        label: "",
         uiConfig: {
           columns: [
             {
@@ -93,50 +87,39 @@ export const searchconfig = () =>
             },
             {
               label: "Address",
-              jsonPath: "address", // Assuming you want the first address
-              // additionalCustomization: (data) => {
-              //   // Customize the address format here
-              //   const addressData = data && data.address && data.address[0];
-              //   if (addressData) {
-              //     const { doorNo, street, locality, city, pincode } = addressData;
-              //     return `${doorNo}, ${street}, ${locality}, ${city}, ${pincode}`;
-              //   }
-              //  // return "NA";
-              // }
-              "additionalCustomization": true
+              jsonPath: "address",
+             "additionalCustomization": true
             },
-            // Add more columns as needed
           ],
-          enableGlobalSearch: false,
+        
           enableColumnSort: true,
-          resultsJsonPath: "Individual" // This is the key where the array of individual data is located
+          resultsJsonPath: "Individual"
         },
-        children: {},
         show: true,
       },
-      
-      additionalSections: {},
     },
   };
 };
 
 const SearchIndividual = () => {
   const { t } = useTranslation();
-  const tenant = Digit.ULBService.getStateId();
+  const [defaultValues, setDefaultValues] = useState(defaultSearchValues); // State to hold default values for search fields
   const indConfigs = searchconfig();
 
-  // let configs = useMemo(
-  //   () => Digit.Utils.preProcessMDMSConfigInboxSearch(t, indConfigs, "sections.search.uiConfig.fields",{
-  //   }
-  //   ),[indConfigs]);
-  
+  useEffect(() => {
+    // Set default values when component mounts
+    setDefaultValues(defaultSearchValues);
+  }, []);
+
   return (
     <React.Fragment>
       <Header styles={{ fontSize: "32px" }}>{t(indConfigs?.label)}</Header> 
       <div className="inbox-search-wrapper">
-        <InboxSearchComposer configs={indConfigs}></InboxSearchComposer>
+        {/* Pass defaultValues as props to InboxSearchComposer */}
+        <InboxSearchComposer configs={indConfigs} defaultValues={defaultValues}></InboxSearchComposer>
       </div>
     </React.Fragment>
   );
 };
 export default SearchIndividual;
+

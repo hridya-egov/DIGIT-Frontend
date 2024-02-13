@@ -7,8 +7,6 @@ const ROLES = {
   MDMS: ["MDMS_ADMIN", "EMPLOYEE", "SUPERUSER"],
   DSS: ["STADMIN"],
 };
-
-// Mukta Overrriding the Works Home screen card
 const WorkbenchCard = () => {
   if (!Digit.Utils.didEmployeeHasAtleastOneRole(Object.values(ROLES).flatMap((e) => e))) {
     return null;
@@ -31,24 +29,14 @@ const WorkbenchCard = () => {
     {
       label: t("Search individual"),
       link: `/${window?.contextPath}/employee/workbench/workbench-search`,
-      roles: ROLES.LOCALISATION,
+      roles: ROLES.MDMS,
     },
     {
       label: t("Create Individual"),
       link: `/${window?.contextPath}/employee/workbench/workbench-create`,
-      roles: ROLES.LOCALISATION,
+      roles: ROLES.MDMS,
     },
-    
-    // {
-    //   label: t("Sample Create master"),
-    //   link: `/${window?.contextPath}/employee/workbench/mdms-add-v2?moduleName=common-masters&masterName=Sample`,
-    //   roles: ROLES.MDMS,
-    // },
-    // {
-    //   label: t("Sample Search master"),
-    //   link: `/${window?.contextPath}/employee/workbench/mdms-search-v2?masterName=common-masters&moduleName=Sample`,
-    //   roles: ROLES.MDMS,
-    // },
+   
   ];
 
   links = links.filter((link) => (link?.roles && link?.roles?.length > 0 ? Digit.Utils.didEmployeeHasAtleastOneRole(link?.roles) : true));

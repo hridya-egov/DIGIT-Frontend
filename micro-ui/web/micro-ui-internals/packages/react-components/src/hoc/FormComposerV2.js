@@ -71,6 +71,7 @@ const wrapperStyles = {
  */
 
 export const FormComposer = (props) => {
+  
   const { t } = useTranslation();
 /* added an enhancement for validate data with schema still some issue with sometype we have to solve it*/
   const inputProps={
@@ -159,8 +160,8 @@ export const FormComposer = (props) => {
     const customRules = customValidation ? {validate : customValidation} : {};
     const customProps = config?.customProps;
     switch (type) {
-      case "date":
       case "text":
+      case "date":
       case "number":
       case "password":
       case "time":

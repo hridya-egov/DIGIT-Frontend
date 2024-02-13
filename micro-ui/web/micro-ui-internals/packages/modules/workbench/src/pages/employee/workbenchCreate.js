@@ -4,330 +4,17 @@ import { useHistory } from "react-router-dom";
 import { FormComposerV2 } from "@egovernments/digit-ui-react-components";
 import useCustomAPIMutationHook from "../../../../../libraries/src/hooks/useCustomAPIMutationHook";
 
-//const formDataToRequestObj = ( formData ) => {
-//console.log("inside format")
-//make a req object (refer from postman)
-//return that object
-//}
-
-export const newConfig = [
-  {
-    head: "Create Individual",
-    //subHead: "Config Sub Head",
-    body: [
-      {
-        inline: true,
-        label: "Applicant Name",
-        isMandatory: false,
-        key: "BrSelectFather",
-        type: "text",
-        disable: false,
-        populators: { name: "applicantname", error: "Required", validation: { pattern: /^[A-Za-z]+$/i } },
-      },
-      {
-        inline: true,
-        label: "date of birth",
-        isMandatory: false,
-        key: "BrSelectFather",
-        type: "date",
-        disable: false,
-        populators: { name: "dob", error: "Required"},
-      },
-      
-
-      {
-        isMandatory: true,
-        key: "genders",
-        type: "dropdown",
-        label: "Enter Gender",
-        disable: false,
-        populators: {
-          name: "genders",
-          optionsKey: "name",
-          error: "sample required message",
-          required: true,
-          mdmsConfig: {
-            masterName: "GenderType",
-            moduleName: "common-masters",
-            localePrefix: "COMMON_GENDER",
-          },
-        },
-      },
-      
-
-       {
-         label: "Photograph",
-         isMandatory: false,
-         key: "BrSelectFather",
-         type: "file",
-         disable: false,
-         //populators: { name: "samplenum1", error: "sample error message", validation: { min: 5999999999, max: 9999999999 } },
-       },
-      {
-        label: "Phone number",
-        isMandatory: true,
-        key: "BrSelectFather",
-        type: "number",
-        disable: false,
-        populators: { name: "phno", error: "sample error message", validation: { min: 0, max: 9999999999 } },
-      },
-    ],
-  },
-  {
-    head: "Residential Details",
-    body: [
-      {
-        inline: true,
-        label: "Pincode",
-        isMandatory: true,
-        //description: "Field supporting description",
-        key: "BrSelectFather",
-        type: "number",
-        disable: false,
-        populators: { name: "pincode", error: "sample error message" },
-      },
-      {
-        inline: true,
-        label: "City",
-        isMandatory: true,
-        //description: "Field supporting description",
-        key: "BrSelectFather",
-        type: "text",
-        disable: false,
-        populators: { name: "city", error: "sample error message", validation: { pattern: /^[A-Za-z]+$/i } },
-      },
-      {
-        isMandatory: false,
-        key: "locality",
-        type: "dropdown",
-        label: "Enter locality",
-        disable: false,
-        populators: {
-          name: "locality",
-          optionsKey: "name",
-          error: "sample required message",
-          required: true,
-          
-          options: [
-            {
-                "code": "SUN01",
-                "name": "Ajit Nagar - Area1",
-                "label": "Locality",
-                "latitude": "31.63089",
-                "longitude": "74.871552",
-                "area": "Area1",
-                "pincode": [
-                    143001
-                ],
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN02",
-                "name": "Back Side 33 KVA Grid Patiala Road",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area1",
-                "pincode": [
-                    143001
-                ],
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN03",
-                "name": "Bharath Colony",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area1",
-                "pincode": [
-                    143001
-                ],
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN10",
-                "name": "Backside Brijbala Hospital - Area3",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area3",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN11",
-                "name": "Bigharwal Chowk to Railway Station - Area2",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area2",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN12",
-                "name": "Chandar Colony Biggarwal Road - Area2",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area2",
-                "pincode": [
-                    143001
-                ],
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN20",
-                "name": "Aggarsain Chowk to Mal Godown - Both Sides - Area3",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area3",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN21",
-                "name": "ATAR SINGH COLONY - Area2",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area2",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN22",
-                "name": "Back Side Naina Devi Mandir - Area2",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area2",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN30",
-                "name": "Bakhtaur Nagar - Area1",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area1",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN31",
-                "name": "Bhai Mool Chand Sahib Colony - Area1",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area1",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN32",
-                "name": "College Road (Southern side) - Area2",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area2",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            },
-            {
-                "code": "SUN33",
-                "name": "Ekta Colony (Southern Side) - Area1",
-                "label": "Locality",
-                "latitude": null,
-                "longitude": null,
-                "area": "Area1",
-                "pincode": null,
-                "boundaryNum": 1,
-                "children": []
-            }
-        ],
-        },
-      },
-
-      {
-        inline: true,
-        label: "Street",
-        isMandatory: false,
-        //description: "Field supporting description",
-        key: "BrSelectFather",
-        type: "text",
-        disable: false,
-        populators: { name: "street", error: "sample error message", validation: { pattern: /^[A-Za-z]+$/i } },
-      },
-      {
-        inline: true,
-        label: "Door Number",
-        isMandatory: true,
-        //description: "Field supporting description",
-        key: "BrSelectFather",
-        type: "number",
-
-        type: "number",
-        disable: false,
-        populators: { name: "doorno", error: " error ", validation: { min: 0, max: 9999999999 } },
-      },
-      {
-        inline: true,
-        label: "Landmark",
-        isMandatory: false,
-        //description: "Field supporting description",
-        key: "BrSelectFather",
-        type: "text",
-        disable: false,
-        populators: { name: "landmark", error: "sample error message", validation: { pattern: /^[A-Za-z]+$/i } },
-      },
-    ],
-  },
-];
-
-
-
-const convertDateToEpoch = (dateString) => {
-  // Parse the date string in the format "dd/mm/yyyy"
-  const [day, month, year] = dateString.split('/');
-
-  // Create a Date object using the parsed components
-  const convertedDate = new Date(`${year}-${month}-${day}T00:00:00Z`);
-
-  // Check if the converted date is valid
-  if (isNaN(convertedDate.getTime())) {
-    console.error('Invalid date provided.');
-    return null;
-  }
-
-  // Convert the date to epoch time in seconds
-  const epochTimeInSeconds = Math.floor(convertedDate.getTime() / 1000);
-
-  return epochTimeInSeconds;
-};
-
+ 
 
 
 
 const Create = () => {
+  const [toastMessage, setToastMessage] = useState("");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { t } = useTranslation();
   const history = useHistory();
+  const [photo, setPhoto] = useState();
+  console.log(photo, "calling from create component")
   const [gender, setGender] = useState("");
   const reqCreate = {
     url: `/individual/v1/_create`,
@@ -338,30 +25,309 @@ const Create = () => {
     },
   };
 
+   const newConfig = [
+    {
+   head: "Create Individual",   
+    body: [
+        {
+          inline: true,
+          label: "Applicant Name",
+          isMandatory: false,
+          key: "applicantname",
+          type: "text",
+          disable: false,
+          populators: { name: "applicantname", error: "Required", validation: { pattern: /^[A-Za-z]+$/i } },
+        },
+        {
+          inline: true,
+          label: "date of birth",
+          isMandatory: false,
+          key: "dob",
+          type: "date",
+          disable: false,
+          populators: { name: "dob", error: "Required"},
+        },
+        
+  
+        {
+          isMandatory: true,
+          key: "genders",
+          type: "dropdown",
+          label: "Enter Gender",
+          disable: false,
+          populators: {
+            name: "genders",
+            optionsKey: "name",
+            error: "required ",
+            //required: true,
+            mdmsConfig: {
+              masterName: "GenderType",
+              moduleName: "common-masters",
+              localePrefix: "COMMON_GENDER",
+            },
+          },
+        },
+        
+        { label: "Document",
+          type: "component",
+         isMandatory: false,
+          key: "photograph",
+          component :"DocumentUploadComponent",
+          "customProps" : {
+            // "onPhotoUpload" : setPhoto
+            "module": "HCM"
+          },
+          populators: { name: "photograph", error: "sample error message", validation: { min: 0, max: 9999999999 } },
+        },
+       
+        {
+          label: "Phone number",
+          isMandatory: true,
+          key: "phno",
+          type: "number",
+          disable: false,
+          populators: { name: "phno", error: "sample error message", validation: { min: 0, max: 9999999999 } },
+        },
+      ],
+    },
+    {
+      head: "Residential Details",
+      body: [
+        {
+          inline: true,
+          label: "Pincode",
+          isMandatory: true,
+          key: "pincode",
+          type: "number",
+          disable: false,
+          populators: { name: "pincode", error: "error " },
+        },
+        {
+          inline: true,
+          label: "City",
+          isMandatory: true,
+          key: "city",
+          type: "text",
+          disable: false,
+          populators: { name: "city", error: " error ", validation: { pattern: /^[A-Za-z]+$/i } },
+        },
+        {
+          isMandatory: false,
+          key: "locality",
+          type: "dropdown",
+          label: "Enter locality",
+          disable: false,
+          populators: {
+            name: "locality",
+            optionsKey: "name",
+            error: " required message",
+            required: true,
+            
+            options: [
+              {
+                  "code": "SUN01",
+                  "name": "Ajit Nagar - Area1",
+                  "label": "Locality",
+                  "latitude": "31.63089",
+                  "longitude": "74.871552",
+                  "area": "Area1",
+                  "pincode": [
+                      143001
+                  ],
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN02",
+                  "name": "Back Side 33 KVA Grid Patiala Road",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area1",
+                  "pincode": [
+                      143001
+                  ],
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN03",
+                  "name": "Bharath Colony",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area1",
+                  "pincode": [
+                      143001
+                  ],
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN10",
+                  "name": "Backside Brijbala Hospital - Area3",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area3",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN11",
+                  "name": "Bigharwal Chowk to Railway Station - Area2",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area2",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN12",
+                  "name": "Chandar Colony Biggarwal Road - Area2",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area2",
+                  "pincode": [
+                      143001
+                  ],
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN20",
+                  "name": "Aggarsain Chowk to Mal Godown - Both Sides - Area3",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area3",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN21",
+                  "name": "ATAR SINGH COLONY - Area2",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area2",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN22",
+                  "name": "Back Side Naina Devi Mandir - Area2",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area2",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN30",
+                  "name": "Bakhtaur Nagar - Area1",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area1",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN31",
+                  "name": "Bhai Mool Chand Sahib Colony - Area1",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area1",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN32",
+                  "name": "College Road (Southern side) - Area2",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area2",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              },
+              {
+                  "code": "SUN33",
+                  "name": "Ekta Colony (Southern Side) - Area1",
+                  "label": "Locality",
+                  "latitude": null,
+                  "longitude": null,
+                  "area": "Area1",
+                  "pincode": null,
+                  "boundaryNum": 1,
+                  "children": []
+              }
+          ],
+          },
+        },
+  
+        {
+          inline: true,
+          label: "Street",
+          isMandatory: false,
+          key: "street",
+          type: "text",
+          disable: false,
+          populators: { name: "street", error: "sample error message", validation: { pattern: /^[A-Za-z]+$/i } },
+        },
+        {
+          inline: true,
+          label: "Door Number",
+          isMandatory: true,
+          key: "doorno",
+          type: "number",
+          disable: false,
+          populators: { name: "doorno", error: " error ", validation: { min: 0, max: 9999999999 } },
+        },
+        {
+          inline: true,
+          label: "Landmark",
+          isMandatory: false,
+          key: "landmark",
+          type: "text",
+          disable: false,
+          populators: { name: "landmark", error: "sample error message", validation: { pattern: /^[A-Za-z]+$/i } },
+        },
+      ],
+    },
+  ];
+
   const mutation = useCustomAPIMutationHook(reqCreate);
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
   };
 
-  const onSubmit = async(data) => {
-    console.log(data, "data");
-    const dateconverted= convertDateToEpoch(data?.dob);
-console.log(dateconverted);
+  const onFormValueChange = (setValue, formData) => {
+    console.log("formData", formData);
+    // const {onPhotoUpload} = formData;
+    // setPhoto(onPhotoUpload);
+    // console.log("formData", formData);
+    // console.log("on photo upload",onPhotoUpload);
+  };
 
-    const onSuccess = (resp) => {
-      if (resp) {
-        console.log("successful", resp);
-        setShowToast({ key: "success", action: "Creation Success" });
-      }
-    };
-    const onError = (resp) => {
-      if (resp && resp.ResponseInfo && resp.ResponseInfo.length > 0) {
-        console.log("giving errors", resp);
-        setShowToast({ key: "error", action: "Creation Failed" });
-      }
-    };
-    
+  const onSubmit = async(data,formData) => {
+    console.log(data, "data");
+    // console.log("Uploaded photo:",photo);
+    setToastMessage("Form submitted successfully!");
     await mutation.mutate(
       {
         url: `/individual/v1/_create`,
@@ -397,7 +363,7 @@ console.log(dateconverted);
                     "level": "UNSKILLED"
                 }
             ],
-            photo: null,
+            "photograph": photo,
             additionalFields: {
                 "fields": [
                     {
@@ -424,29 +390,7 @@ console.log(dateconverted);
           enable: true,
         },
       },
-      {
-        onSuccess,
-        onError,
-      }
     );
-
-    // const requestObj = {}
-    // {
-    //   requestObj.name = data.applicantname;
-    //   requestObj.gender = data.gender;
-    //   requestObj.phno =data.phno;
-    //   requestObj.pincode = data.pincode;
-    //   requestObj.city =data.city;
-    //   requestObj.locality =data.locality;
-    //   requestObj.street = data.street;
-    //   requestObj.doorno =data.roomno;
-    //   requestObj.landmark = data.landmark;
-
-    // }
-    //console.log(requestObj, "data in form");
-    //};
-
-    /* use newConfig instead of commonFields for local development in case needed */
 
     const configs = newConfig;
 
@@ -454,21 +398,30 @@ console.log(dateconverted);
 
   return (
     <div>
+      <h1> Create Individual</h1>
       <FormComposerV2
         label={t("Submit")}
-       // description={"Description"}
-        // text={"Sample Text if required"}
         config={newConfig.map((config) => {
           return {
             ...config,
+            
+          
           };
         })}
         defaultValues={{}}
-        onSubmit={onSubmit}
+        //onSubmit={onSubmit}
+        onSubmit={(data, formData) => onSubmit(data, formData)}
         fieldStyle={{ marginRight: 0 }}
+        onFormValueChange={onFormValueChange}
       />
+        {/* Toast Component */}
+        {toastMessage && (
+        <div style={{ backgroundColor: "lightblue", padding: "10px", borderRadius: "5px", marginTop: "10px" }}>
+          <div>{toastMessage}</div>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default Create;
